@@ -7,14 +7,17 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 
-@Component(modules = [
-    AppModule::class,
-    ActivityBuildersModule::class,
-    AndroidSupportInjectionModule::class])
+@Component(
+    modules = [
+        ActivityBuildersModule::class,
+        AndroidSupportInjectionModule::class,
+        AppModule::class]
+)
 interface AppComponent : AndroidInjector<BaseApplication> {
 
     @Component.Builder
     interface Builder {
+
         @BindsInstance
         fun application(application: Application): Builder
 
