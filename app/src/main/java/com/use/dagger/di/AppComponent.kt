@@ -11,7 +11,8 @@ import dagger.android.support.AndroidSupportInjectionModule
     modules = [
         ActivityBuildersModule::class,
         AndroidSupportInjectionModule::class,
-        AppModule::class]
+        AppModule::class,
+        ViewModelFactoryModule::class]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
 
