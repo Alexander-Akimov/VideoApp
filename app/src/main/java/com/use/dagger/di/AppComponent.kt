@@ -9,8 +9,8 @@ import dagger.android.support.AndroidSupportInjectionModule
 
 @Component(
     modules = [
-        ActivityBuildersModule::class,
         AndroidSupportInjectionModule::class,
+        ActivityBuildersModule::class,
         AppModule::class,
         ViewModelFactoryModule::class]
 )

@@ -10,5 +10,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(modules = [AuthViewModelsModule::class])
-    abstract fun contributeAuthActivity(): AuthActivity
+    abstract fun contributeAuthActivity(): AuthActivity //let Dagger to Know that AuthActivity is potential client, that i can inject into
 }

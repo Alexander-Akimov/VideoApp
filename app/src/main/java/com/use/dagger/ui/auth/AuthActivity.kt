@@ -3,7 +3,6 @@ package com.use.dagger.ui.auth
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.RequestManager
 import com.use.dagger.R
 import dagger.android.support.DaggerAppCompatActivity

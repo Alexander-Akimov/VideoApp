@@ -11,17 +11,27 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-public class AppModule {
+class AppModule {
 
-    @Module
+    @Provides
+    fun provideRequestOptions(): RequestOptions =
+        RequestOptions
+            .placeholderOf(R.drawable.white_background)
+            .error(R.drawable.white_background)
+
+    @Provides
+    fun provideGlideInstance(application: Application, requestOptions: RequestOptions): RequestManager =
+        Glide.with(application)
+            .setDefaultRequestOptions(requestOptions)
+
+    @Provides
+
+    fun provideAppDrawable(application: Application): Drawable? =
+        ContextCompat.getDrawable(application, R.drawable.logo)
+
+    /*@Module
     companion object {
-        @JvmStatic
-        @Provides
-        fun provideRequestOptions(): RequestOptions =
-            RequestOptions
-                .placeholderOf(R.drawable.white_background)
-                .error(R.drawable.white_background)
-
+    //    @JvmStatic
         @JvmStatic
         @Provides
         fun provideGlideInstance(application: Application, requestOptions: RequestOptions): RequestManager =
@@ -32,5 +42,5 @@ public class AppModule {
         @JvmStatic
         fun provideAppDrawable(application: Application): Drawable? =
             ContextCompat.getDrawable(application, R.drawable.logo)
-    }
+    }*/
 }
