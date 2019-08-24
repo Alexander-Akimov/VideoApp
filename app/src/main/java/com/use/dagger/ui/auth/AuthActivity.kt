@@ -31,7 +31,6 @@ class AuthActivity : DaggerAppCompatActivity() {
 
         viewModel = ViewModelProvider(this, providerFactory).get(AuthViewModel::class.java)
 
-
         setLogo()
     }
 
