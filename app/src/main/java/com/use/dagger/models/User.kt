@@ -6,19 +6,19 @@ import com.google.gson.annotations.SerializedName
 data class User(
     @SerializedName("id")
     @Expose
-    val id: Int,
+    val id: Int = 0,
 
     @SerializedName("username")
     @Expose
-    val userName: String,
+    val userName: String = "",
 
     @SerializedName("email")
     @Expose
-    val email: String,
+    val email: String = "",
 
     @SerializedName("website")
     @Expose
-    val website: String
+    val website: String = ""
 ) {
-    constructor() : this(0, "", "", "")
+
 }

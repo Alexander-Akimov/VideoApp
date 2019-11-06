@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.RequestManager
@@ -40,14 +41,38 @@ class AuthActivity : DaggerAppCompatActivity() {
         setLogo()
 
         // Create the observer which log user email
-        val userObserver = Observer<User> { user ->
-            if (user != null) {
-                Log.d(TAG, "onChanged:${user.email}")
+        val userObserver = Observer<AuthResource<User>> { userAuthResource ->
+            if (userAuthResource != null) {
+                when (userAuthResource.status) {
+                    AuthResource.AuthStatus.LOADING -> {
+                        showProgessBar(true)
+                    }
+                    AuthResource.AuthStatus.AUTHENTICATED -> {
+                        showProgessBar(false)
+                        Log.d(TAG, "onChanged: LOGIN SUCCESS: ${userAuthResource.data?.email}")
+                    }
+                    AuthResource.AuthStatus.ERROR -> {
+                        showProgessBar(false)
+                        Toast.makeText(this, userAuthResource.message, Toast.LENGTH_SHORT).show()
+                    }
+                    AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
+                        showProgessBar(false)
+                    }
+                }
             }
         }
 
-        viewModel.authUser.observe(this, userObserver)
+        viewModel.observeAuthState.observe(this, userObserver)
     }
+
+    private fun showProgessBar(isVisible: Boolean) {
+        if (isVisible) {
+            progress_bar.visibility = View.VISIBLE
+        } else {
+            progress_bar.visibility = View.GONE
+        }
+    }
+
 
     private fun setLogo() {
         requestManager

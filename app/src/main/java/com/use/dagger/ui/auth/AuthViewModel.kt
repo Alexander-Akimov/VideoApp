@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import com.use.dagger.SessionManager
 import com.use.dagger.models.User
 import com.use.dagger.network.auth.AuthApi
 import io.reactivex.Observable
@@ -19,12 +20,13 @@ class AuthViewModel : ViewModel {
     private val TAG = AuthViewModel::class.simpleName
     private val authApi: AuthApi
 
-    public var authUser: MediatorLiveData<User> = MediatorLiveData()
+    private val sessionManager: SessionManager
 
     @Inject
-    constructor(authApi: AuthApi) {
+    constructor(authApi: AuthApi, sessionManager: SessionManager) {
         Log.d(TAG, "AuthViewModel: viewmodel is working...")
         this.authApi = authApi
+        this.sessionManager = sessionManager
 
         /*val res = if(this.authApi != null) " NOT" else ""
         Log.d(TAG, "AuthApi is$res NULL")*/
@@ -43,12 +45,19 @@ class AuthViewModel : ViewModel {
     private fun errorHandle(e: Throwable) =
         Log.e(TAG, "onError: ", e)
 
-    public fun authenticateWithId(userId: Int) {
+    fun authenticateWithId(userId: Int) {
+        Log.d(TAG, "authenticateWithId: attmpting to login")
 
-        val source: LiveData<User> = LiveDataReactiveStreams.fromPublisher(
-            authApi.getUser(userId).subscribeOn(
-                Schedulers.io()
-            )
+        val source: LiveData<AuthResource<User>> = LiveDataReactiveStreams.fromPublisher(
+            authApi.getUser(userId)
+                .onErrorReturn { User(-1) }//error happens
+                .map {
+                    if (it.id == -1)
+                        AuthResource.error("Could not authenticate", null)
+                    else
+                        AuthResource.authenticated(it)
+                }
+                .subscribeOn(Schedulers.io())
         )
         authUser.addSource(source) { user ->
             authUser.value = user
@@ -56,7 +65,5 @@ class AuthViewModel : ViewModel {
         }
     }
 
-    fun observeUser() = this.authUser
-
-
+    //var observeAuthState: LiveData<AuthResource<User>> = this.sessionManager.authUser
 }

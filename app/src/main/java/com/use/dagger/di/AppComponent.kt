@@ -2,6 +2,7 @@ package com.use.dagger.di
 
 import android.app.Application
 import com.use.dagger.BaseApplication
+import com.use.dagger.SessionManager
 import com.use.dagger.di.auth.AuthActivityBuildersModule
 import dagger.BindsInstance
 import dagger.Component
@@ -18,6 +19,8 @@ import javax.inject.Singleton
         ViewModelFactoryModule::class]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
+
+    fun sessionManager(): SessionManager
 
     @Component.Builder
     interface Builder {
