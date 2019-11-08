@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.use.dagger.R
+import com.use.dagger.SessionManager
 import com.use.dagger.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -17,6 +18,10 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+
+    @Singleton
+    @Provides
+    fun sessionManager() = SessionManager()
 
     @Singleton
     @Provides

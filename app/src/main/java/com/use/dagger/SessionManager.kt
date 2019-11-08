@@ -14,8 +14,11 @@ class SessionManager @Inject constructor() {
 
     private var cachedUser: MediatorLiveData<AuthResource<User>> = MediatorLiveData()
 
+    var authUser: LiveData<AuthResource<User>> = cachedUser
+
     fun auhtenticateWithId(source: LiveData<AuthResource<User>>) {
         cachedUser.value = AuthResource.loading(null)
+
         cachedUser.addSource(source) { user ->
             cachedUser.value = user
             cachedUser.removeSource(source)
@@ -27,5 +30,5 @@ class SessionManager @Inject constructor() {
         cachedUser.value = AuthResource.logout()
     }
 
-    var authUser: LiveData<AuthResource<User>> = cachedUser
+
 }

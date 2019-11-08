@@ -20,7 +20,7 @@ import javax.inject.Singleton
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
 
-    fun sessionManager(): SessionManager
+
 
     @Component.Builder
     interface Builder {

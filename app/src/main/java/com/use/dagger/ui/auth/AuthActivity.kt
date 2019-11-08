@@ -15,7 +15,6 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
 import  com.use.dagger.viewmodels.ViewModelProviderFactory
-import kotlin.math.log
 
 class AuthActivity : DaggerAppCompatActivity() {
 
@@ -45,18 +44,18 @@ class AuthActivity : DaggerAppCompatActivity() {
             if (userAuthResource != null) {
                 when (userAuthResource.status) {
                     AuthResource.AuthStatus.LOADING -> {
-                        showProgessBar(true)
+                        showProgressBar(true)
                     }
                     AuthResource.AuthStatus.AUTHENTICATED -> {
-                        showProgessBar(false)
+                        showProgressBar(false)
                         Log.d(TAG, "onChanged: LOGIN SUCCESS: ${userAuthResource.data?.email}")
                     }
                     AuthResource.AuthStatus.ERROR -> {
-                        showProgessBar(false)
+                        showProgressBar(false)
                         Toast.makeText(this, userAuthResource.message, Toast.LENGTH_SHORT).show()
                     }
                     AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
-                        showProgessBar(false)
+                        showProgressBar(false)
                     }
                 }
             }
@@ -65,7 +64,7 @@ class AuthActivity : DaggerAppCompatActivity() {
         viewModel.observeAuthState.observe(this, userObserver)
     }
 
-    private fun showProgessBar(isVisible: Boolean) {
+    private fun showProgressBar(isVisible: Boolean) {
         if (isVisible) {
             progress_bar.visibility = View.VISIBLE
         } else {
@@ -73,14 +72,13 @@ class AuthActivity : DaggerAppCompatActivity() {
         }
     }
 
-
     private fun setLogo() {
         requestManager
             .load(logo)
             .into(login_logo)
     }
 
-    public fun loginBtnClicked(v: View) {
+    fun loginBtnClicked(view: View) {
         val userIdStr = user_id_input.text.toString()
         if (TextUtils.isEmpty(userIdStr))
             return

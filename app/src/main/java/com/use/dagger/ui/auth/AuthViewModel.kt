@@ -20,13 +20,16 @@ class AuthViewModel : ViewModel {
     private val TAG = AuthViewModel::class.simpleName
     private val authApi: AuthApi
 
-    private val sessionManager: SessionManager
+    private var sessionManager: SessionManager
+
+    var observeAuthState: LiveData<AuthResource<User>>
 
     @Inject
     constructor(authApi: AuthApi, sessionManager: SessionManager) {
         Log.d(TAG, "AuthViewModel: viewmodel is working...")
         this.authApi = authApi
         this.sessionManager = sessionManager
+        this.observeAuthState = this.sessionManager.authUser
 
         /*val res = if(this.authApi != null) " NOT" else ""
         Log.d(TAG, "AuthApi is$res NULL")*/
@@ -46,9 +49,16 @@ class AuthViewModel : ViewModel {
         Log.e(TAG, "onError: ", e)
 
     fun authenticateWithId(userId: Int) {
-        Log.d(TAG, "authenticateWithId: attmpting to login")
+        Log.d(TAG, "authenticateWithId: attempting to login")
 
-        val source: LiveData<AuthResource<User>> = LiveDataReactiveStreams.fromPublisher(
+        val res = queryUserId(userId)
+
+        sessionManager.auhtenticateWithId(res)
+
+    }
+
+    fun queryUserId(userId: Int): LiveData<AuthResource<User>> {
+        return LiveDataReactiveStreams.fromPublisher(
             authApi.getUser(userId)
                 .onErrorReturn { User(-1) }//error happens
                 .map {
@@ -59,11 +69,5 @@ class AuthViewModel : ViewModel {
                 }
                 .subscribeOn(Schedulers.io())
         )
-        authUser.addSource(source) { user ->
-            authUser.value = user
-            authUser.removeSource(source)
-        }
     }
-
-    //var observeAuthState: LiveData<AuthResource<User>> = this.sessionManager.authUser
 }
