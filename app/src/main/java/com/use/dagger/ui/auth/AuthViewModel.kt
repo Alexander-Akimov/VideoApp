@@ -3,14 +3,10 @@ package com.use.dagger.ui.auth
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.use.dagger.SessionManager
 import com.use.dagger.models.User
 import com.use.dagger.network.auth.AuthApi
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.internal.operators.single.SingleInternalHelper.toObservable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -53,7 +49,7 @@ class AuthViewModel : ViewModel {
 
         val res = queryUserId(userId)
 
-        sessionManager.auhtenticateWithId(res)
+        sessionManager.authenticateWithId(res)
 
     }
 

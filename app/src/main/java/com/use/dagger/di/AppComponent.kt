@@ -2,8 +2,6 @@ package com.use.dagger.di
 
 import android.app.Application
 import com.use.dagger.BaseApplication
-import com.use.dagger.SessionManager
-import com.use.dagger.di.auth.AuthActivityBuildersModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -14,7 +12,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        AuthActivityBuildersModule::class,
+        ActivityBuildersModule::class,
         AppModule::class,
         ViewModelFactoryModule::class]
 )

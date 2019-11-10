@@ -1,5 +1,6 @@
 package com.use.dagger.ui.auth
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.RequestManager
 import com.use.dagger.R
 import com.use.dagger.models.User
+import com.use.dagger.ui.main.MainActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
@@ -37,7 +39,7 @@ class AuthActivity : DaggerAppCompatActivity() {
 
         viewModel = ViewModelProvider(this, providerFactory).get(AuthViewModel::class.java)
 
-        setLogo()
+        //setLogo()
 
         // Create the observer which log user email
         val userObserver = Observer<AuthResource<User>> { userAuthResource ->
@@ -49,6 +51,7 @@ class AuthActivity : DaggerAppCompatActivity() {
                     AuthResource.AuthStatus.AUTHENTICATED -> {
                         showProgressBar(false)
                         Log.d(TAG, "onChanged: LOGIN SUCCESS: ${userAuthResource.data?.email}")
+                        onLoginSuccess()
                     }
                     AuthResource.AuthStatus.ERROR -> {
                         showProgressBar(false)
@@ -70,6 +73,12 @@ class AuthActivity : DaggerAppCompatActivity() {
         } else {
             progress_bar.visibility = View.GONE
         }
+    }
+
+    private fun onLoginSuccess() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setLogo() {
