@@ -31,7 +31,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0-beta01'
+    implementation 'androidx.core:core-ktx:1.2.0-beta02'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
 
     //Tests
@@ -59,7 +59,7 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
 
     // ViewModel and LiveData
-    def lifecycle_version = '2.2.0-rc01'
+    def lifecycle_version = '2.2.0-rc02'
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
 
     //RxKotlin
-    implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
     //implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
     // prior to Android 5.0 (API level 21) --> because of minSdkVersion 16 <--

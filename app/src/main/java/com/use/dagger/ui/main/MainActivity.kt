@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.use.dagger.BaseActivity
 
 import com.use.dagger.R
+import com.use.dagger.ui.main.profile.ProfileFragment
 
 import kotlinx.android.synthetic.main.activity_main.toolbar
 
@@ -23,6 +24,15 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
 
         Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
+
+        testFragment()
+    }
+
+    private fun testFragment(){
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, ProfileFragment())
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
