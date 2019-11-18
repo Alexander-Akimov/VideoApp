@@ -25,9 +25,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
-
+        //Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
         testFragment()
     }
 

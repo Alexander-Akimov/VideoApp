@@ -41,6 +41,10 @@ class AuthActivity : DaggerAppCompatActivity() {
 
         //setLogo()
 
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers() {
         // Create the observer which log user email
         val userObserver = Observer<AuthResource<User>> { userAuthResource ->
             if (userAuthResource != null) {

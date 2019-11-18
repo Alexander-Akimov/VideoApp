@@ -10,5 +10,5 @@ class AuthModule {
 
     @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthApi =
-         retrofit.create(AuthApi::class.java)
+        retrofit.create(AuthApi::class.java)
 }
