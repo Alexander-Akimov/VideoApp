@@ -5,12 +5,16 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.use.dagger.BaseActivity
 
 import com.use.dagger.R
 import com.use.dagger.ui.main.profile.ProfileFragment
+import com.use.dagger.ui.main.profile.ProfileViewModel
+import com.use.dagger.viewmodels.ViewModelProviderFactory
 
 import kotlinx.android.synthetic.main.activity_main.toolbar
+import javax.inject.Inject
 
 
 class MainActivity : BaseActivity() {
@@ -20,7 +24,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(toolbar)
 
         Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
