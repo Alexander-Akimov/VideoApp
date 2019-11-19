@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.use.dagger.BaseActivity
 
 import com.use.dagger.R
+import com.use.dagger.ui.main.posts.PostsFragment
 import com.use.dagger.ui.main.profile.ProfileFragment
 import com.use.dagger.ui.main.profile.ProfileViewModel
 import com.use.dagger.viewmodels.ViewModelProviderFactory
@@ -32,7 +33,7 @@ class MainActivity : BaseActivity() {
     private fun testFragment(){
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.main_container, ProfileFragment())
+            .replace(R.id.main_container, PostsFragment())
             .commit()
     }
 
