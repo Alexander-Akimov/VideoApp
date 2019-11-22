@@ -19,7 +19,7 @@ class PostsViewModel : ViewModel {
     private val sessionManager: SessionManager
     private val mainApi: MainApi
 
-    private var posts: MediatorLiveData<Resource<List<Post>>> = MediatorLiveData()
+    private lateinit var posts: MediatorLiveData<Resource<List<Post>>>
 
     @Inject
     constructor(sessionManager: SessionManager, mainApi: MainApi) {

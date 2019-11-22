@@ -42,11 +42,13 @@ class PostsFragment : DaggerFragment() {
 
     private fun subscribeObservers() {
         viewModel.observePosts().removeObservers(viewLifecycleOwner)
+
         val postsObserver = Observer<Resource<List<Post>>> { listResource ->
-            if(listResource!=null)
-                Log.d(TAG, "onChanged: "+ listResource.data)
+            if (listResource.data != null)
+                Log.d(TAG, "onChanged: " + listResource.data)
 
         }
+
         viewModel.observePosts().observe(viewLifecycleOwner, postsObserver)
     }
 }
