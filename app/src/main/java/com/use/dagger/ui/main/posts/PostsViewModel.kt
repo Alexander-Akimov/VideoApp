@@ -35,7 +35,7 @@ class PostsViewModel : ViewModel {
         posts = MediatorLiveData()
         posts.value = Resource.loading(null)
 
-        val userId = this.sessionManager.authUser.value?.data?.id///todo: need to be observing
+        val userId = this.sessionManager.authUser.value?.data?.id//todo: need to be observing
 
         if (userId != null) {
             val source = LiveDataReactiveStreams.fromPublisher(
