@@ -17,6 +17,7 @@ class BaseApplication : DaggerApplication() {
             .build()
     }
 
+    // enable multidex if your minSdkVersion is set to 20 or lower
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         MultiDex.install(this)
