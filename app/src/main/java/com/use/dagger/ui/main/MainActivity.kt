@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
 import com.use.dagger.BaseActivity
 
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity() {
 
     private val TAG = MainActivity::class.simpleName
 
@@ -30,15 +32,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
         //setSupportActionBar(toolbar)
         //Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
-        testFragment()
+        // testFragment()
+        init()
+
     }
 
-    private fun testFragment() {
+    private fun init() {
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout)
+        NavigationUI.setupWithNavController(nav_view, navController)
+        nav_view.setNavigationItemSelectedListener { this.onNavigationItemSelected(it) }
+    }
+
+    /*private fun testFragment() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_container, PostsFragment())
             .commit()
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
@@ -57,11 +68,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    private fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_posts -> {
-            }
             R.id.nav_profile -> {
+                Navigation
+                    .findNavController(this, R.id.nav_host_fragment)
+                    .navigate(R.id.profileScreen)
+            }
+
+            R.id.nav_posts -> {
+                Navigation
+                    .findNavController(this, R.id.nav_host_fragment)
+                    .navigate(R.id.postsScreen)
             }
         }
         item.isChecked = true
