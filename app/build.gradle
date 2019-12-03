@@ -40,6 +40,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
 
+    //Reactive Streams (convert Observable to LiveData)
+    def reactivestreams_version = "1.1.1"
+    implementation "android.arch.lifecycle:reactivestreams:$reactivestreams_version"
+
     //Tests
     implementation 'com.google.android.material:material:1.0.0'
     testImplementation 'junit:junit:4.13-rc-1'
@@ -85,9 +89,5 @@ dependencies {
     //By default, Dalvik limits apps to a single classes.dex bytecode file per APK
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
-
-    //Reactive Streams (convert Observable to LiveData)
-    def reactivestreams_version = "1.1.1"
-    implementation "android.arch.lifecycle:reactivestreams:$reactivestreams_version"
 
 }

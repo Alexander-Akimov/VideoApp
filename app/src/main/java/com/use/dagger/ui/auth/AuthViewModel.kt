@@ -56,7 +56,7 @@ class AuthViewModel : ViewModel {
     fun queryUserId(userId: Int): LiveData<AuthResource<User>> {
         return LiveDataReactiveStreams.fromPublisher(
             authApi.getUser(userId)
-                .onErrorReturn { User(-1) }//error happens
+                .onErrorReturn { it -> User(-1) }//error happens
                 .map {
                     if (it.id == -1)
                         AuthResource.error("Could not authenticate", null)
