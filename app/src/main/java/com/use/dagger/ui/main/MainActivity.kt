@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
@@ -42,7 +43,8 @@ class MainActivity : BaseActivity() {
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout)
         NavigationUI.setupWithNavController(nav_view, navController)
-        nav_view.setNavigationItemSelectedListener { this.onNavigationItemSelected(it) }
+
+        nav_view.setNavigationItemSelectedListener { this.onNavigationItemSelected(it) }/**/
     }
 
     /*private fun testFragment() {
@@ -65,30 +67,58 @@ class MainActivity : BaseActivity() {
                 sessionManager.logOut()
                 true
             }
+            android.R.id.home -> {
+                if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                    true
+                } else
+                    false //do not consume a click
+            }/**/
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    //Changes the way back navigation works
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.nav_host_fragment), drawer_layout)
+        return NavigationUI.navigateUp(
+            Navigation.findNavController(this, R.id.nav_host_fragment),
+            drawer_layout
+        )
     }
 
     private fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.main, true)
+                    .build()
+
                 Navigation
                     .findNavController(this, R.id.nav_host_fragment)
-                    .navigate(R.id.profileScreen)
+                    .navigate(
+                        R.id.profileScreen,
+                        null,
+                        navOptions
+                    )
             }
 
             R.id.nav_posts -> {
-                Navigation
-                    .findNavController(this, R.id.nav_host_fragment)
-                    .navigate(R.id.postsScreen)
+                if (isValidDestination(R.id.postsScreen)) {
+                    Navigation
+                        .findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.postsScreen)
+                }
             }
         }
         item.isChecked = true
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun isValidDestination(destination: Int): Boolean {
+        return destination != Navigation.findNavController(
+            this,
+            R.id.nav_host_fragment
+        ).currentDestination?.id
     }
 }
