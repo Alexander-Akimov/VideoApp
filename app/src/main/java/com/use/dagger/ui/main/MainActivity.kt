@@ -1,28 +1,17 @@
 package com.use.dagger.ui.main
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.navigation.NavigationView
 import com.use.dagger.BaseActivity
 
 import com.use.dagger.R
-import com.use.dagger.ui.main.posts.PostsFragment
-import com.use.dagger.ui.main.profile.ProfileFragment
-import com.use.dagger.ui.main.profile.ProfileViewModel
-import com.use.dagger.viewmodels.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_main.*
-
-import javax.inject.Inject
 
 
 class MainActivity : BaseActivity() {
@@ -32,19 +21,19 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //setSupportActionBar(toolbar)
-        //Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
+        // setSupportActionBar(toolbar)
+        // Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
         // testFragment()
-        init()
 
+        initNavigation()
     }
 
-    private fun init() {
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+    private fun initNavigation() {
+       val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout)
         NavigationUI.setupWithNavController(nav_view, navController)
 
-        nav_view.setNavigationItemSelectedListener { this.onNavigationItemSelected(it) }/**/
+        //nav_view.setNavigationItemSelectedListener { this.onNavigationItemSelected(it) }
     }
 
     /*private fun testFragment() {
@@ -80,10 +69,8 @@ class MainActivity : BaseActivity() {
 
     //Changes the way back navigation works
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(
-            Navigation.findNavController(this, R.id.nav_host_fragment),
-            drawer_layout
-        )
+        return NavigationUI.navigateUp(findNavController(R.id.nav_host_fragment), drawer_layout)
+                || super.onSupportNavigateUp()
     }
 
     private fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -96,17 +83,17 @@ class MainActivity : BaseActivity() {
                 Navigation
                     .findNavController(this, R.id.nav_host_fragment)
                     .navigate(
-                        R.id.profileScreen,
+                        R.id.nav_profile,
                         null,
                         navOptions
                     )
             }
 
             R.id.nav_posts -> {
-                if (isValidDestination(R.id.postsScreen)) {
+                if (isValidDestination(R.id.nav_posts)) {
                     Navigation
                         .findNavController(this, R.id.nav_host_fragment)
-                        .navigate(R.id.postsScreen)
+                        .navigate(R.id.nav_posts)
                 }
             }
         }

@@ -6,6 +6,6 @@
     <string name="logout">logout</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="this_is_a_title">this is a title</string>
-    <string name="profile">profile</string>
-    <string name="posts">posts</string>
+    <string name="profile">Profile</string>
+    <string name="posts">Posts</string>
 </resources>
