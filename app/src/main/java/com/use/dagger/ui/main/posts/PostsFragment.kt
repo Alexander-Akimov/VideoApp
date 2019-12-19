@@ -47,10 +47,11 @@ class PostsFragment : DaggerFragment() {
 
         initRecyclerView()
         subscribeObservers()
+        viewModel.getPosts()
     }
 
     private fun subscribeObservers() {
-        viewModel.observePosts().removeObservers(viewLifecycleOwner)
+        viewModel.observablePosts.removeObservers(viewLifecycleOwner)
 
         val postsObserver = Observer<Resource<List<Post>>> { listResource ->
             if (listResource.data != null) {
@@ -69,7 +70,7 @@ class PostsFragment : DaggerFragment() {
             }
         }
 
-        viewModel.observePosts().observe(viewLifecycleOwner, postsObserver)
+        viewModel.observablePosts.observe(viewLifecycleOwner, postsObserver)
     }
 
     private fun initRecyclerView() {

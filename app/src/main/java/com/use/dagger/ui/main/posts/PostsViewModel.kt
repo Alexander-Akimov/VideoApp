@@ -21,6 +21,8 @@ class PostsViewModel : ViewModel {
 
     private lateinit var posts: MediatorLiveData<Resource<List<Post>>>
 
+    val observablePosts: LiveData<Resource<List<Post>>> = posts
+
     @Inject
     constructor(sessionManager: SessionManager, mainApi: MainApi) {
         this.sessionManager = sessionManager
@@ -30,11 +32,9 @@ class PostsViewModel : ViewModel {
         Log.d(TAG, "PostsViewModel: viewmodel is working...")
     }
 
-    fun observePosts(): LiveData<Resource<List<Post>>> {
-
+    fun getPosts() {
         posts = MediatorLiveData()
         posts.value = Resource.loading(null)
-
         val userId = this.sessionManager.authUser.value?.data?.id//todo: need to be observing
 
         if (userId != null) {
@@ -63,7 +63,5 @@ class PostsViewModel : ViewModel {
                 posts.removeSource(source)
             }
         }
-
-        return posts
     }
 }
