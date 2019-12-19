@@ -19,7 +19,7 @@ class PostsViewModel : ViewModel {
     private val sessionManager: SessionManager
     private val mainApi: MainApi
 
-    private lateinit var posts: MediatorLiveData<Resource<List<Post>>>
+    private var posts: MediatorLiveData<Resource<List<Post>>> = MediatorLiveData()
 
     val observablePosts: LiveData<Resource<List<Post>>> = posts
 
@@ -33,7 +33,6 @@ class PostsViewModel : ViewModel {
     }
 
     fun getPosts() {
-        posts = MediatorLiveData()
         posts.value = Resource.loading(null)
         val userId = this.sessionManager.authUser.value?.data?.id//todo: need to be observing
 

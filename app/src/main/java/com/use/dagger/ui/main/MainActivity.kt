@@ -3,10 +3,12 @@ package com.use.dagger.ui.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.use.dagger.BaseActivity
 
@@ -21,7 +23,10 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // setSupportActionBar(toolbar)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         // Toast.makeText(this, "MainActivity", Toast.LENGTH_SHORT).show()
         // testFragment()
 
@@ -29,7 +34,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initNavigation() {
-       val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        //val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
         NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout)
         NavigationUI.setupWithNavController(nav_view, navController)
 
@@ -44,9 +53,10 @@ class MainActivity : BaseActivity() {
     }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         val inflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
